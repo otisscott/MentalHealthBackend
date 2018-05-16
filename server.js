@@ -4,10 +4,19 @@ const mongodb = require("mongodb");
 const csv = require("fast-csv");
 const ObjectID = mongodb.ObjectID;
 
+//MentalHealth Collections
 const MENTALHEALTHUSERS = "mentalhealthusers";
+//OpioidLab Collections
 const OPIOIDLABUSERS = "opioidlabusers";
-const COEDUCATEUSERS = "codeucateusers";
+//MethPain Collections
 const METHPAINUSERS = "methpainusers";
+//CoEducate Collections
+const COEDUCATEUSERS = "codeucateusers";
+const COEDUCATECALENDAR = "codeucatecalendar";
+const COEDUCATERESOURCES = "coeducateresources";
+//Veggie Gang Collections
+const VEGGIEGANGUSERS = "veggiegangusers";
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -135,6 +144,52 @@ app.post("/coeducate/api/users", (req, res, next) => {
   });
 })
 
+app.post("/coeducate/api/calendar", (req, res, next) => {
+  const newCalendar = req.body;
+  newCalendar.createDate = new Date();
+
+  db.collection(COEDUCATEUSERS).insertOne(newCalendar, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new calendar.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+})
+
+app.get("/coeducate/api/calendar/:id", (req, res, next) => {
+  db.collection(COEDUCATECALENDAR).findOne({studentid: req.params.id}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid ID");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
+app.post("/coeducate/api/resources", (req, res, next) => {
+  const newResources = req.body;
+  newCalendar.createDate = new Date();
+
+  db.collection(COEDUCATERESOURCES).insertOne(newCalendar, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new calendar.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+})
+
+app.get("/coeducate/api/resources", (req, res, next) => {
+  db.collection(COEDUCATERESOURCES).find({}).toArray((err, docs) => {
+    if (err) {
+      handleError(res, err.message, "Failed to get roasts.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
 //MethPain Backend Stuff
 app.get("/methpain/api/users/:email", (req, res, next) => {
   db.collection(METHPAINUSERS).findOne({email: req.params.email}, (err, doc) => {
@@ -159,6 +214,37 @@ app.post("/methpain/api/users", (req, res, next) => {
   }
 
   db.collection(METHPAINUSERS).insertOne(newUser, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+})
+
+app.get("/veggiegang/api/users/:email", (req, res, next) => {
+  db.collection(VEGGIEGANGUSERS).findOne({email: req.params.email}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid user email");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
+app.post("/veggiegang/api/users", (req, res, next) => {
+  const newUser = req.body;
+  newUser.createDate = new Date();
+
+  if (!req.body.email) {
+    handleError(res, "Invalid user input", "Must provide an email.", 400);
+  }
+
+  if (!req.body.password) {
+    handleError(res, "Invalid user input", "Must provide a password.", 400);
+  }
+
+  db.collection(VEGGIEGANGUSERS).insertOne(newUser, (err, doc) => {
     if (err) {
       handleError(res, err.message, "Failed to create new user.");
     } else {
