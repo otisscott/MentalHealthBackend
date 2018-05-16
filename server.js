@@ -9,7 +9,6 @@ const OPIOIDLABUSERS = "opioidlabusers";
 const COEDUCATEUSERS = "codeucateusers";
 const METHPAINUSERS = "methpainusers";
 const app = express();
-const swearjar = require('swearjar');
 app.use(bodyParser.json());
 
 let db;
