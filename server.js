@@ -16,6 +16,8 @@ const COEDUCATECALENDAR = "codeucatecalendar";
 const COEDUCATERESOURCES = "coeducateresources";
 //Veggie Gang Collections
 const VEGGIEGANGUSERS = "veggiegangusers";
+//Berkeley Eats Collections
+const BERKELEYEATSUSERS = "berkeleyeatsusers";
 
 const app = express();
 app.use(bodyParser.json());
@@ -191,6 +193,7 @@ app.post("/methpain/api/users", (req, res, next) => {
   });
 })
 
+//Veggie Gang Backend Stuff
 app.get("/veggiegang/api/users/:email", (req, res, next) => {
   db.collection(VEGGIEGANGUSERS).findOne({email: req.params.email}, (err, doc) => {
     if (err) {
@@ -206,6 +209,30 @@ app.post("/veggiegang/api/users", (req, res, next) => {
   newUser.createDate = new Date();
 
   db.collection(VEGGIEGANGUSERS).insertOne(newUser, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+})
+
+//Berkeley Eats Backend Stuff
+app.get("/berkeleyeats/api/users/:email", (req, res, next) => {
+  db.collection(BERKELEYEATSUSERS).findOne({email: req.params.email}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid user email");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
+app.post("/berkeleyeats/api/users", (req, res, next) => {
+  const newUser = req.body;
+  newUser.createDate = new Date();
+
+  db.collection(BERKELEYEATSUSERS).insertOne(newUser, (err, doc) => {
     if (err) {
       handleError(res, err.message, "Failed to create new user.");
     } else {
