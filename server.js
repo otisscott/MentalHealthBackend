@@ -206,6 +206,7 @@ app.get("/veggiegang/api/users/:email", (req, res, next) => {
 });
 
 app.post("/veggiegang/api/users", (req, res, next) => {
+  console.log("check")
   const newUser = req.body;
   newUser.createDate = new Date();
 
