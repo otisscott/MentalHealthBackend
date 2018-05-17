@@ -63,13 +63,6 @@ app.post("/mentalhealthapp/api/users", (req, res, next) => {
   const newUser = req.body;
   newUser.createDate = new Date();
 
-  if (!req.body.email) {
-    handleError(res, "Invalid user input", "Must provide an email.", 400);
-  }
-
-  if (!req.body.password) {
-    handleError(res, "Invalid user input", "Must provide a password.", 400);
-  }
 
   db.collection(MENTALHEALTHUSERS).insertOne(newUser, (err, doc) => {
     if (err) {
@@ -95,14 +88,6 @@ app.post("/opioidlab/api/users", (req, res, next) => {
   const newUser = req.body;
   newUser.createDate = new Date();
 
-  if (!req.body.email) {
-    handleError(res, "Invalid user input", "Must provide an email.", 400);
-  }
-
-  if (!req.body.password) {
-    handleError(res, "Invalid user input", "Must provide a password.", 400);
-  }
-
   db.collection(OPIOIDLABUSERS).insertOne(newUser, (err, doc) => {
     if (err) {
       handleError(res, err.message, "Failed to create new user.");
@@ -126,14 +111,6 @@ app.get("/coeducate/api/users/:email", (req, res, next) => {
 app.post("/coeducate/api/users", (req, res, next) => {
   const newUser = req.body;
   newUser.createDate = new Date();
-
-  if (!req.body.email) {
-    handleError(res, "Invalid user input", "Must provide an email.", 400);
-  }
-
-  if (!req.body.password) {
-    handleError(res, "Invalid user input", "Must provide a password.", 400);
-  }
 
   db.collection(COEDUCATEUSERS).insertOne(newUser, (err, doc) => {
     if (err) {
@@ -205,14 +182,6 @@ app.post("/methpain/api/users", (req, res, next) => {
   const newUser = req.body;
   newUser.createDate = new Date();
 
-  if (!req.body.email) {
-    handleError(res, "Invalid user input", "Must provide an email.", 400);
-  }
-
-  if (!req.body.password) {
-    handleError(res, "Invalid user input", "Must provide a password.", 400);
-  }
-
   db.collection(METHPAINUSERS).insertOne(newUser, (err, doc) => {
     if (err) {
       handleError(res, err.message, "Failed to create new user.");
@@ -235,14 +204,6 @@ app.get("/veggiegang/api/users/:email", (req, res, next) => {
 app.post("/veggiegang/api/users", (req, res, next) => {
   const newUser = req.body;
   newUser.createDate = new Date();
-
-  if (!req.body.email) {
-    handleError(res, "Invalid user input", "Must provide an email.", 400);
-  }
-
-  if (!req.body.password) {
-    handleError(res, "Invalid user input", "Must provide a password.", 400);
-  }
 
   db.collection(VEGGIEGANGUSERS).insertOne(newUser, (err, doc) => {
     if (err) {
