@@ -98,6 +98,12 @@ app.post("/coeducate/api/users", (req, res, next) => {
   });
 })
 
+app.put("coeducate/api/users", (req, res, next) => {
+  const newChanges = req.body;
+
+  
+})
+
 app.post("/coeducate/api/calendar", (req, res, next) => {
   const newCalendar = req.body;
   newCalendar.createDate = new Date();
