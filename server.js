@@ -6,8 +6,6 @@ const ObjectID = mongodb.ObjectID;
 
 //MentalHealth Collections
 const MENTALHEALTHUSERS = "mentalhealthusers";
-//OpioidLab Collections
-const OPIOIDLABUSERS = "opioidlabusers";
 //MethPain Collections
 const METHPAINUSERS = "methpainusers";
 //CoEducate Collections
@@ -68,30 +66,6 @@ app.post("/mentalhealthapp/api/users", (req, res, next) => {
 
 
   db.collection(MENTALHEALTHUSERS).insertOne(newUser, (err, doc) => {
-    if (err) {
-      handleError(res, err.message, "Failed to create new user.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
-})
-
-//Opioid Lab Backend Stuff
-app.get("/opioidlab/api/users/:email", (req, res, next) => {
-  db.collection(OPIOIDLABUSERS).findOne({email: req.params.email}, (err, doc) => {
-    if (err) {
-      handleError(res, err.message, "That is not a valid user email");
-    } else {
-      res.status(200).json(doc);
-    }
-  })
-});
-
-app.post("/opioidlab/api/users", (req, res, next) => {
-  const newUser = req.body;
-  newUser.createDate = new Date();
-
-  db.collection(OPIOIDLABUSERS).insertOne(newUser, (err, doc) => {
     if (err) {
       handleError(res, err.message, "Failed to create new user.");
     } else {
