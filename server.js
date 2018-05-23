@@ -74,6 +74,20 @@ app.post("/mentalhealthapp/api/users", (req, res, next) => {
   });
 })
 
+app.put("/mentalhealthapp/api/users/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(MENTALHEALTHUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update contact");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
+});
+
 //CoEducate Backend Stuff
 app.get("/coeducate/api/users/:email", (req, res, next) => {
   db.collection(COEDUCATEUSERS).findOne({email: req.params.email}, (err, doc) => {
@@ -98,11 +112,19 @@ app.post("/coeducate/api/users", (req, res, next) => {
   });
 })
 
-app.put("coeducate/api/users", (req, res, next) => {
-  const newChanges = req.body;
+app.put("/coeducate/api/users/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
 
-  
-})
+  db.collection(COEDUCATEUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update contact");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
+});
 
 app.post("/coeducate/api/calendar", (req, res, next) => {
   const newCalendar = req.body;
@@ -174,6 +196,20 @@ app.post("/methpain/api/users", (req, res, next) => {
   });
 })
 
+app.put("/methpain/api/users/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(METHPAINUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update contact");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
+});
+
 //Veggie Gang Backend Stuff
 app.get("/veggiegang/api/users/:email", (req, res, next) => {
   db.collection(VEGGIEGANGUSERS).findOne({email: req.params.email}, (err, doc) => {
@@ -200,6 +236,20 @@ app.post("/veggiegang/api/users", (req, res, next) => {
   });
 })
 
+app.put("/veggiegang/api/users/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(VEGGIEGANGUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update contact");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
+});
+
 //Berkeley Eats Backend Stuff
 app.get("/berkeleyeats/api/users/:email", (req, res, next) => {
   db.collection(BERKELEYEATSUSERS).findOne({email: req.params.email}, (err, doc) => {
@@ -223,6 +273,21 @@ app.post("/berkeleyeats/api/users", (req, res, next) => {
     }
   });
 })
+
+app.put("/berkeleyeats/api/users/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(BERKELEYEATSUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update contact");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
+});
+
 /*
 app.post("/api/students", (req, res, next) => {
   csv
