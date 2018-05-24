@@ -288,6 +288,39 @@ app.put("/berkeleyeats/api/users/:id", function(req, res) {
   });
 });
 
+app.get("/berkeleyeats/api/orders/:id", (req, res, next) => {
+  db.collection(BERKELEYEATSORDERS).findOne({_id: req.params.id}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid user email");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
+app.post("/berkeleyeats/api/orders", (req, res, next) => {
+  const newOrder = req.body;
+  newUser.createDate = new Date();
+
+  db.collection(BERKELEYEATSORDERS).insertOne(newOrder, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+})
+
+app.delete("/berkeleyeats/api/orders/:id", (req, res, next) => {
+  db.collection(BERKELEYEATSORDERS).deleteOne({_id: new ObjectID(req.params.id)}, (err, result) => {
+    if (err) {
+      handleError(res, err.message, "Failed to delete order");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
+});
+
 /*
 app.post("/api/students", (req, res, next) => {
   csv
