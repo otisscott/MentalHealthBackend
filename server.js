@@ -298,6 +298,16 @@ app.get("/berkeleyeats/api/orders/:id", (req, res, next) => {
   })
 });
 
+app.get("//berkeleyeats/api/orders", (req, res, next) => {
+  db.collection(BERKELEYEATSORDERS).find({}).toArray((err, docs) => {
+    if (err) {
+      handleError(res, err.message, "Failed to get roasts.");
+    } else {
+      res.status(200).json(docs);
+    }
+  });
+});
+
 app.post("/berkeleyeats/api/orders", (req, res, next) => {
   const newOrder = req.body;
   newUser.createDate = new Date();
