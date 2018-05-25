@@ -298,7 +298,7 @@ app.get("/berkeleyeats/api/orders/:id", (req, res, next) => {
   })
 });
 
-app.get("//berkeleyeats/api/orders", (req, res, next) => {
+app.get("/berkeleyeats/api/orders", (req, res, next) => {
   db.collection(BERKELEYEATSORDERSw).find({}).toArray((err, docs) => {
     if (err) {
       handleError(res, err.message, "Failed to get roasts.");
