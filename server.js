@@ -310,7 +310,7 @@ app.get("/berkeleyeats/api/orders", (req, res, next) => {
 
 app.post("/berkeleyeats/api/orders", (req, res, next) => {
   const newOrder = req.body;
-  newUser.createDate = new Date();
+  newOrder.createDate = new Date();
 
   db.collection(BERKELEYEATSORDERS).insertOne(newOrder, (err, doc) => {
     if (err) {
