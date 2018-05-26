@@ -16,6 +16,7 @@ const COEDUCATERESOURCES = "coeducateresources";
 const VEGGIEGANGUSERS = "veggiegangusers";
 //Berkeley Eats Collections
 const BERKELEYEATSUSERS = "berkeleyeatsusers";
+const BERKELEYEATSORDERS = "berkeleyeatsorders";
 
 const app = express();
 app.use(bodyParser.json());
