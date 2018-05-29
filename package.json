@@ -16,7 +16,7 @@
     "core-js": "^2.5.7",
     "express": "^4.16.2",
     "fast-csv": "^2.4.1",
-    "mongodb": "^3.1.0-beta4",
+    "mongodb": "^2.2.33",
     "nodemon": "^1.17.5",
     "zone.js": "^0.8.26"
   }

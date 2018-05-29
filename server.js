@@ -23,14 +23,14 @@ app.use(bodyParser.json());
 
 let db;
 
-const connectString = "mongodb://otisscott:mrholstonbulliesme@ds125896.mlab.com:25896";
+const connectString = "mongodb://otisscott:mrholstonbulliesme@ds125896.mlab.com:25896/heroku_j1dpz4jk";
 
-mongodb.MongoClient.connect(connectString, (err, client) => {
+mongodb.MongoClient.connect(connectString, (err, database) => {
   if (err) {
     console.log(err);
     process.exit(1);
   }
-  db = client.db("heroku_j1dpz4jk");
+  db = database;
   console.log("Database connection ready");
   // Initialize the app.
   const server = app.listen(process.env.PORT || 8080, () => {
@@ -67,9 +67,11 @@ app.post("/mentalhealthapp/api/users", (req, res, next) => {
 
 
   db.collection(MENTALHEALTHUSERS).insertOne(newUser, (err, doc) => {
-    if (err) handleError(res, err.message, "Failed to create new user.");
-    res.status(201).json(doc.ops[0]);
-    client.close();
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
   });
 })
 
@@ -299,9 +301,11 @@ app.get("/berkeleyeats/api/orders/:id", (req, res, next) => {
 
 app.get("/berkeleyeats/api/orders", (req, res, next) => {
   db.collection(BERKELEYEATSORDERS).find({}).toArray((err, docs) => {
-    if (err) handleError(res, err.message, "Failed to get roasts.");
-    res.status(200).json(docs);
-    client.close();
+    if (err) {
+      handleError(res, err.message, "Failed to get roasts.");
+    } else {
+      res.status(200).json(docs);
+    }
   });
 });
 
@@ -322,7 +326,7 @@ app.put("/berkeleyeats/api/orders/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(BERKELEYEATSORDERS).findByIdAndUpdate(req.params.id, updateDoc, {new: true}, function(err, doc) {
+  db.collection(BERKELEYEATSORDERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
