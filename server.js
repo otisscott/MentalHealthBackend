@@ -326,7 +326,7 @@ app.put("/berkeleyeats/api/orders/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(BERKELEYEATSORDERS).findByIdAndUpdate(new ObjectID(req.params.id), updateDoc, {new: true}, function(err, doc) {
+  db.collection(BERKELEYEATSORDERS).findByIdAndUpdate(req.params.id, updateDoc, {new: true}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
