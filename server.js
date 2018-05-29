@@ -290,7 +290,7 @@ app.put("/berkeleyeats/api/users/:id", function(req, res) {
 });
 
 app.get("/berkeleyeats/api/orders/:id", (req, res, next) => {
-  db.collection(BERKELEYEATSORDERS).findOne({_id: req.params.id}, (err, doc) => {
+  db.collection(BERKELEYEATSORDERS).findOne({_id: new ObjectID(req.params.id)}, (err, doc) => {
     if (err) {
       handleError(res, err.message, "That is not a valid user email");
     } else {
