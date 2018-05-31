@@ -17,6 +17,9 @@ const VEGGIEGANGUSERS = "veggiegangusers";
 //Berkeley Eats Collections
 const BERKELEYEATSUSERS = "berkeleyeatsusers";
 const BERKELEYEATSORDERS = "berkeleyeatsorders";
+//FloofBunny Collections
+const FLOOFBUNNYUSERS = "floofbunnyusers";
+const FLOOFBUNNY = "floofbunny";
 
 const app = express();
 app.use(bodyParser.json());
@@ -223,8 +226,6 @@ app.get("/veggiegang/api/users/:email", (req, res, next) => {
 });
 
 app.post("/veggiegang/api/users", (req, res, next) => {
-  console.log("check")
-  console.log(req.body)
   const newUser = req.body;
   newUser.createDate = new Date();
 
@@ -342,6 +343,82 @@ app.delete("/berkeleyeats/api/orders/:id", (req, res, next) => {
       handleError(res, err.message, "Failed to delete order");
     } else {
       res.status(200).json(req.params.id);
+    }
+  });
+});
+
+//FloofBunny Backend Stuff
+
+app.get("/floofbunny/api/users/:email", (req, res, next) => {
+  db.collection(FLOOFBUNNYUSERS).findOne({email: req.params.email}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid user email");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
+app.post("/floofbunny/api/users", (req, res, next) => {
+  const newUser = req.body;
+  newUser.createDate = new Date();
+
+  db.collection(FLOOFBUNNYUSERS).insertOne(newUser, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+})
+
+app.put("/floofbunny/api/users/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(FLOOFBUNNYUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update contact");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
+    }
+  });
+});
+
+app.get("/floofbunny/api/bunnies/:bunName", (req, res, next) => {
+  db.collection(FLOOFBUNNY).findOne({bunName: req.params.bunName}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid user email");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
+app.post("/floofbunny/api/bunnies", (req, res, next) => {
+  const newUser = req.body;
+  newUser.createDate = new Date();
+
+  db.collection(FLOOFBUNNY).insertOne(newUser, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+})
+
+app.put("/floofbunny/api/bunnies/:id", function(req, res) {
+  var updateDoc = req.body;
+  delete updateDoc._id;
+
+  db.collection(FLOOFBUNNY).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to update contact");
+    } else {
+      updateDoc._id = req.params.id;
+      res.status(200).json(updateDoc);
     }
   });
 });
