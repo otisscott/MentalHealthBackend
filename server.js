@@ -361,6 +361,32 @@ app.delete("/berkeleyeats/api/orders/:id", (req, res, next) => {
   });
 });
 
+app.post("/berkeleyeats/api/send', (req, res) => {
+    let SID = "ACa06b90b0b052386d0493842a41023491";
+    let TOKEN = "a70ee2f50a025618ca2b7abd11622402";
+    let SENDER = "+14159806254";
+
+    if(!SID || !TOKEN) {
+        return res.json({message: 'add TWILIO_SID and TWILIO_TOKEN to .env file.'})
+    }
+
+    let client = require('twilio')(SID, TOKEN);
+
+    client.sendMessage({
+        to: "15106127276",
+        from: SENDER,
+        body: 'word to your mother.'
+    }, (err, responseData) => {
+        if (!err) {
+            res.json({
+                From: responseData.from,
+                Body: responseData.body
+            })
+        }
+    })
+});
+
+
 //FloofBunny Backend Stuff
 
 app.get("/floofbunny/api/users/:email", (req, res, next) => {
