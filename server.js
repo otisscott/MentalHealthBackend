@@ -364,16 +364,16 @@ app.delete("/berkeleyeats/api/orders/:id", (req, res, next) => {
 });
 
 app.post("/berkeleyeats/api/send", (req, res) => {
-    let SID = "ACa06b90b0b052386d0493842a41023491";
-    let TOKEN = "a70ee2f50a025618ca2b7abd11622402";
+    const SID = "ACa06b90b0b052386d0493842a41023491";
+    const TOKEN = "a70ee2f50a025618ca2b7abd11622402";
   
-    let client = new twilio(SID, TOKEN);
+    const client = new twilio(SID, TOKEN);
     const text = req.body;
     text.createDate = new Date();
     text.note = "hi";
   
    client.messages.create({
-      body: "Hello from Node",
+      body: text.note,
       to: '+15106127276',
       from: "+14159806254"
     })
