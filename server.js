@@ -371,6 +371,7 @@ app.post("/berkeleyeats/api/send", (req, res) => {
     let client = new twilio(SID, TOKEN);
     const text = req.body;
     text.createDate = new Date();
+    text.note = "hi";
   
    client.messages.create({
       body: 'Hello from Node',
