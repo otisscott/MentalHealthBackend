@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongodb = require("mongodb");
 const csv = require("fast-csv");
 const ObjectID = mongodb.ObjectID;
+const twilio = require("twilio");
 
 //MentalHealth Collections
 const MENTALHEALTHUSERS = "mentalhealthusers";
@@ -17,6 +18,7 @@ const VEGGIEGANGUSERS = "veggiegangusers";
 //Berkeley Eats Collections
 const BERKELEYEATSUSERS = "berkeleyeatsusers";
 const BERKELEYEATSORDERS = "berkeleyeatsorders";
+const BERKELEYEATSTEXTS = "berkeleyeatstexts";
 //FloofBunny Collections
 const FLOOFBUNNYUSERS = "floofbunnyusers";
 const FLOOFBUNNY = "floofbunny";
@@ -330,7 +332,7 @@ app.post("/berkeleyeats/api/orders", (req, res, next) => {
 
   db.collection(BERKELEYEATSORDERS).insertOne(newOrder, (err, doc) => {
     if (err) {
-      handleError(res, err.message, "Failed to create new user.");
+      handleError(res, err.message, "Failed to create new order.");
     } else {
       res.status(201).json(doc.ops[0]);
     }
@@ -365,12 +367,18 @@ app.post("/berkeleyeats/api/send", (req, res) => {
     let SID = "ACa06b90b0b052386d0493842a41023491";
     let TOKEN = "a70ee2f50a025618ca2b7abd11622402";
     let SENDER = "+14159806254";
+  
+    let client = new twilio(SID, TOKEN);
+    const text = req.body;
+    text.createDate = new Date();
 
-    if(!SID || !TOKEN) {
-        return res.json({message: 'add TWILIO_SID and TWILIO_TOKEN to .env file.'})
-    }
-
-    let client = require('twilio')(SID, TOKEN);
+    db.collection(BERKELEYEATSTEXTS).insertOne(text, (err, doc) => {
+      if (err) {
+        handleError(res, err.message, "Failed to create new text.");
+      } else {
+        res.status(201).json(doc.ops[0]);
+      }
+    });
 
     client.sendMessage({
         to: "15106127276",
