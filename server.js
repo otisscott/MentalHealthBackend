@@ -366,7 +366,6 @@ app.delete("/berkeleyeats/api/orders/:id", (req, res, next) => {
 app.post("/berkeleyeats/api/send", (req, res) => {
     let SID = "ACa06b90b0b052386d0493842a41023491";
     let TOKEN = "a70ee2f50a025618ca2b7abd11622402";
-    let SENDER = "+14159806254";
   
     let client = new twilio(SID, TOKEN);
     const text = req.body;
@@ -374,11 +373,12 @@ app.post("/berkeleyeats/api/send", (req, res) => {
     text.note = "hi";
   
    client.messages.create({
-      body: 'Hello from Node',
+      body: "Hello from Node",
       to: '+15106127276',
-      from: SENDER
+      from: "+14159806254"
     })
-    .then((message) => console.log(message.sid));
+    .then((message) => console.log(message.sid))
+    .catch(error => console.log(error));
 
     db.collection(BERKELEYEATSTEXTS).insertOne(text, (err, doc) => {
       if (err) {
