@@ -370,6 +370,7 @@ app.post("/berkeleyeats/api/send", (req, res) => {
     const client = new twilio(SID, TOKEN);
     const text = req.body;
     text.createDate = new Date();
+
     text.note = "new";
   
    client.messages.create({
