@@ -368,7 +368,7 @@ app.post("/berkeleyeats/api/send", (req, res) => {
     let TOKEN = "a70ee2f50a025618ca2b7abd11622402";
     let SENDER = "+14159806254";
   
-    //let client = new twilio(SID, TOKEN);
+    let client = new twilio(SID, TOKEN);
     const text = req.body;
     text.createDate = new Date();
 
