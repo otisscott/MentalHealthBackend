@@ -377,7 +377,7 @@ app.post("/berkeleyeats/api/send", (req, res) => {
       to: '+15106127276',
       from: "+14159806254"
     })
-    .then((message) => console.log(message.sid); console.log(client.httpClient.lastResponse.statusCode));
+    .then((message) => console.log(client.httpClient.lastResponse.statusCode + " " + message.sid))
     .catch(error => console.log(error));
 
     db.collection(BERKELEYEATSTEXTS).insertOne(text, (err, doc) => {
