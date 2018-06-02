@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const mongodb = require("mongodb");
 const csv = require("fast-csv");
 const ObjectID = mongodb.ObjectID;
-const twilio = require("twilio");
+//const twilio = require("twilio");
 
 //MentalHealth Collections
 const MENTALHEALTHUSERS = "mentalhealthusers";
@@ -368,7 +368,7 @@ app.post("/berkeleyeats/api/send", (req, res) => {
     let TOKEN = "a70ee2f50a025618ca2b7abd11622402";
     let SENDER = "+14159806254";
   
-    let client = new twilio(SID, TOKEN);
+    //let client = new twilio(SID, TOKEN);
     const text = req.body;
     text.createDate = new Date();
 
@@ -380,7 +380,7 @@ app.post("/berkeleyeats/api/send", (req, res) => {
       }
     });
 
-    client.sendMessage({
+    /*client.sendMessage({
         to: "15106127276",
         from: SENDER,
         body: 'word to your mother.'
@@ -392,6 +392,7 @@ app.post("/berkeleyeats/api/send", (req, res) => {
             })
         }
     })
+    */
 });
 
 
