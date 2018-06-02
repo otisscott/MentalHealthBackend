@@ -180,7 +180,7 @@ app.post("/coeducate/api/resources", (req, res, next) => {
       res.status(201).json(doc.ops[0]);
     }
   });
-})
+});
 
 app.get("/coeducate/api/resources", (req, res, next) => {
   db.collection(COEDUCATERESOURCES).find({}).toArray((err, docs) => {
@@ -214,7 +214,7 @@ app.post("/methpain/api/users", (req, res, next) => {
       res.status(201).json(doc.ops[0]);
     }
   });
-})
+});
 
 app.put("/methpain/api/users/:id", function(req, res) {
   var updateDoc = req.body;
@@ -252,10 +252,10 @@ app.post("/veggiegang/api/users", (req, res, next) => {
       res.status(201).json(doc.ops[0]);
     }
   });
-})
+});
 
 app.put("/veggiegang/api/users/:id", function(req, res) {
-  var updateDoc = req.body;
+  let updateDoc = req.body;
   delete updateDoc._id;
 
   db.collection(VEGGIEGANGUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
@@ -290,10 +290,10 @@ app.post("/berkeleyeats/api/users", (req, res, next) => {
       res.status(201).json(doc.ops[0]);
     }
   });
-})
+});
 
 app.put("/berkeleyeats/api/users/:id", function(req, res) {
-  var updateDoc = req.body;
+  let updateDoc = req.body;
   delete updateDoc._id;
 
   db.collection(BERKELEYEATSUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
@@ -337,10 +337,10 @@ app.post("/berkeleyeats/api/orders", (req, res, next) => {
       res.status(201).json(doc.ops[0]);
     }
   });
-})
+});
 
 app.put("/berkeleyeats/api/orders/:id", function(req, res) {
-  var updateDoc = req.body;
+  let updateDoc = req.body;
   delete updateDoc._id;
 
   db.collection(BERKELEYEATSORDERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
