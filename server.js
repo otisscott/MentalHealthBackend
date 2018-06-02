@@ -375,7 +375,7 @@ app.post("/berkeleyeats/api/send", (req, res) => {
    client.messages.create({
       body: text.note,
       to: '+15106127276',
-      from: "+14159806254"
+      from: "+18316099815"
     })
     .then((message) => console.log(client.httpClient.lastResponse.statusCode + " " + message.sid))
     .catch(error => console.log(error));
@@ -414,10 +414,10 @@ app.post("/floofbunny/api/users", (req, res, next) => {
       res.status(201).json(doc.ops[0]);
     }
   });
-})
+});
 
 app.put("/floofbunny/api/users/:id", function(req, res) {
-  var updateDoc = req.body;
+  let updateDoc = req.body;
   delete updateDoc._id;
 
   db.collection(FLOOFBUNNYUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
