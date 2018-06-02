@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const mongodb = require("mongodb");
 const csv = require("fast-csv");
 const ObjectID = mongodb.ObjectID;
-//const twilio = require("twilio");
+const twilio = require("twilio");
 
 //MentalHealth Collections
 const MENTALHEALTHUSERS = "mentalhealthusers";
