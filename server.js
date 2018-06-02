@@ -379,20 +379,12 @@ app.post("/berkeleyeats/api/send", (req, res) => {
         res.status(201).json(doc.ops[0]);
       }
     });
-
-    /*client.sendMessage({
-        to: "15106127276",
-        from: SENDER,
-        body: 'word to your mother.'
-    }, (err, responseData) => {
-        if (!err) {
-            res.json({
-                From: responseData.from,
-                Body: responseData.body
-            })
-        }
+    client.messages.create({
+      body: 'Hello from Node',
+      to: '+15106127276',
+      from: SENDER
     })
-    */
+  .then((message) => console.log(message.sid));
 });
 
 
