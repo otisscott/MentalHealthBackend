@@ -368,13 +368,11 @@ app.post("/berkeleyeats/api/send", (req, res) => {
     const TOKEN = "f05fc664aae751c22f2552a0f48de57b";
   
     const client = new twilio(SID, TOKEN);
-    const text = req.body;
+    const text = req;
     text.createDate = new Date();
-
-    text.note = "new";
   
    client.messages.create({
-      body: text.note,
+      body: text,
       to: '+15106127276',
       from: "+14158518990"
     })
