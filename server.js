@@ -372,7 +372,7 @@ app.post("/berkeleyeats/api/send", (req, res) => {
     text.createDate = new Date();
   
    client.messages.create({
-      body: req.note,
+      body: "Order up",
       to: '+15106127276',
       from: "+14158518990"
     })
