@@ -375,18 +375,17 @@ app.post("/berkeleyeats/api/send", (req, res) => {
       body: "Order up",
       to: '+15106127276',
       from: "+14158518990"
-    })
-    .then((message) => console.log(client.httpClient.lastResponse.statusCode + " " + message.sid))
+   })
+       .then(
+           db.collection(BERKELEYEATSTEXTS).insertOne(text, (err, doc) => {
+             if (err) {
+               handleError(res, err.message, "Failed to create new text.");
+             } else {
+               res.status(201).json(doc.ops[0]);
+             }
+      })
+    )
     .catch(error => console.log(error));
-
-    db.collection(BERKELEYEATSTEXTS).insertOne(text, (err, doc) => {
-      if (err) {
-        handleError(res, err.message, "Failed to create new text.");
-      } else {
-        res.status(201).json(doc.ops[0]);
-      }
-    });
-   
 });
 
 
@@ -450,10 +449,10 @@ app.post("/floofbunny/api/bunnies", (req, res, next) => {
       res.status(201).json(doc.ops[0]);
     }
   });
-})
+});
 
 app.put("/floofbunny/api/bunnies/:id", function(req, res) {
-  var updateDoc = req.body;
+  let updateDoc = req.body;
   delete updateDoc._id;
 
   db.collection(FLOOFBUNNY).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
