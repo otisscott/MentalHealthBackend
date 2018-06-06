@@ -88,7 +88,7 @@ app.put("/mentalhealthapp/api/users/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(MENTALHEALTHUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(MENTALHEALTHUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -163,7 +163,7 @@ app.put("/coeducate/api/calendar/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(COEDUCATECALENDAR).updateOne({studentid: req.params.id}, updateDoc, function(err, doc) {
+  db.collection(COEDUCATECALENDAR).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -224,7 +224,7 @@ app.put("/methpain/api/users/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(METHPAINUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(METHPAINUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -262,7 +262,7 @@ app.put("/veggiegang/api/users/:id", function(req, res) {
   let updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(VEGGIEGANGUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(VEGGIEGANGUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -309,7 +309,7 @@ app.put("/berkeleyeats/api/users/:id", function(req, res) {
   let updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(BERKELEYEATSUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(BERKELEYEATSUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -356,7 +356,7 @@ app.put("/berkeleyeats/api/orders/:id", function(req, res) {
   let updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(BERKELEYEATSORDERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(BERKELEYEATSORDERS).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -379,7 +379,7 @@ app.delete("/berkeleyeats/api/orders/:id", (req, res, next) => {
 app.post("/berkeleyeats/api/send", (req, res) => {
     const text = req.body;
     text.createDate = new Date();
-  
+
    client.messages.create({
       body: req.body.note,
       to: req.body.to,
@@ -427,7 +427,7 @@ app.put("/floofbunny/api/users/:id", function(req, res) {
   let updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(FLOOFBUNNYUSERS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(FLOOFBUNNYUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -464,7 +464,7 @@ app.put("/floofbunny/api/bunnies/:id", function(req, res) {
   let updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(FLOOFBUNNY).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  db.collection(FLOOFBUNNY).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
