@@ -26,6 +26,10 @@ const FLOOFBUNNY = "floofbunny";
 const app = express();
 app.use(bodyParser.json());
 
+const SID = "ACa06b90b0b052386d0493842a41023491";
+const TOKEN = "a70ee2f50a025618ca2b7abd11622402";
+const client = new twilio(SID, TOKEN);
+
 let db;
 
 const connectString = "mongodb://otisscott:mrholstonbulliesme@ds125896.mlab.com:25896/heroku_j1dpz4jk";
@@ -282,6 +286,15 @@ app.get("/berkeleyeats/api/users/:email", (req, res, next) => {
 app.post("/berkeleyeats/api/users", (req, res, next) => {
   const newUser = req.body;
   newUser.createDate = new Date();
+  client.validationRequests
+        .create({
+            friendlyName: newUser.firstName + " " + newUser.lastName,
+            phoneNumber: newUser.phone
+        })
+        .then(validation_request =>
+            console.log(validation_request.friendlyName)
+        )
+        .done();
 
   db.collection(BERKELEYEATSUSERS).insertOne(newUser, (err, doc) => {
     if (err) {
@@ -364,10 +377,6 @@ app.delete("/berkeleyeats/api/orders/:id", (req, res, next) => {
 });
 
 app.post("/berkeleyeats/api/send", (req, res) => {
-    const SID = "ACa06b90b0b052386d0493842a41023491";
-    const TOKEN = "a70ee2f50a025618ca2b7abd11622402";
-  
-    const client = new twilio(SID, TOKEN);
     const text = req.body;
     text.createDate = new Date();
   
