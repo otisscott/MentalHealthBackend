@@ -126,7 +126,7 @@ app.put("/coeducate/api/users/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(COEDUCATEUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {information:{ updateDoc.information }}}, function(err, doc) {
+  db.collection(COEDUCATEUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {information:{ updateDoc.information}}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -291,16 +291,17 @@ app.post("/berkeleyeats/api/users", (req, res, next) => {
             friendlyName: newUser.firstName + " " + newUser.lastName,
             phoneNumber: newUser.phone
         })
-        .then(validation_request => {
-            console.log(validation_request.friendlyName);
-            db.collection(BERKELEYEATSUSERS).insertOne(newUser, (err, doc) => {
-                    if (err) {
-                        handleError(res, err.message, "Failed to create new user.");
-                    } else {
-                        res.status(201).json(doc.ops[0]);
-                    }
-        })
+        .then(validation_request =>
+            console.log(validation_request.friendlyName)
+        )
         .done();
+
+  db.collection(BERKELEYEATSUSERS).insertOne(newUser, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
   });
 });
 
