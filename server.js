@@ -126,7 +126,7 @@ app.put("/coeducate/api/users/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(COEDUCATEUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
+  db.collection(COEDUCATEUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {information:{ updateDoc.information }}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
