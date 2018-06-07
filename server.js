@@ -126,7 +126,7 @@ app.put("/coeducate/api/users/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(COEDUCATEUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {information:{ updateDoc.information}}}, function(err, doc) {
+  db.collection(COEDUCATEUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {information:{ req.body.information}}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -163,7 +163,7 @@ app.put("/coeducate/api/calendar/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(COEDUCATECALENDAR).update({_id: new ObjectID(req.params.id)}, {$push: {events: {updateDoc.events}}}, function(err, doc) {
+  db.collection(COEDUCATECALENDAR).update({_id: new ObjectID(req.params.id)}, {$push: {events: {req.body.events}}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
