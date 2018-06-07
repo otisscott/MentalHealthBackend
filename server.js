@@ -291,17 +291,16 @@ app.post("/berkeleyeats/api/users", (req, res, next) => {
             friendlyName: newUser.firstName + " " + newUser.lastName,
             phoneNumber: newUser.phone
         })
-        .then(validation_request =>
-            console.log(validation_request.friendlyName)
-        )
+        .then(validation_request => {
+            console.log(validation_request.friendlyName);
+            db.collection(BERKELEYEATSUSERS).insertOne(newUser, (err, doc) => {
+                    if (err) {
+                        handleError(res, err.message, "Failed to create new user.");
+                    } else {
+                        res.status(201).json(doc.ops[0]);
+                    }
+        })
         .done();
-
-  db.collection(BERKELEYEATSUSERS).insertOne(newUser, (err, doc) => {
-    if (err) {
-      handleError(res, err.message, "Failed to create new user.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
   });
 });
 
