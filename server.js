@@ -447,6 +447,16 @@ app.get("/floofbunny/api/bunnies/:bunName", (req, res, next) => {
   })
 });
 
+app.get("/floofbunny/api/bunnies/:email", (req, res, next) => {
+  db.collection(FLOOFBUNNY).findOne({email: req.params.email}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid user email");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
 app.post("/floofbunny/api/bunnies", (req, res, next) => {
   const newUser = req.body;
   newUser.createDate = new Date();
