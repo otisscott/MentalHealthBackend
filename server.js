@@ -7,6 +7,7 @@ const twilio = require("twilio");
 
 //MentalHealth Collections
 const MENTALHEALTHUSERS = "mentalhealthusers";
+const MENTALHEALTHSTORIES = "mentalhealthstories";
 //MethPain Collections
 const METHPAINUSERS = "methpainusers";
 //CoEducate Collections
@@ -97,6 +98,30 @@ app.put("/mentalhealthapp/api/users/:id", function(req, res) {
     }
   });
 });
+
+app.post("/mentalhealthapp/api/stories", function(req, res) {
+  const newStories = req.body;
+  newUser.createDate = new Date();
+
+  db.collection(MENTALHEALTHSTORIES).insertOne(newStories, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+})
+
+app.get("/mentalhealthstories/api/stories/:email", (req, res, next) => {
+  db.collection(MENTALHEALTHSTORIES).findOne({email: req.params.email}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid user email");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
 
 //CoEducate Backend Stuff
 app.get("/coeducate/api/users/:email", (req, res, next) => {
