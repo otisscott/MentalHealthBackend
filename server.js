@@ -474,7 +474,7 @@ app.put("/floofbunny/api/bunnies/:id", function(req, res) {
   let updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(FLOOFBUNNY).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
+  db.collection(FLOOFBUNNY).update({_id: new ObjectID(req.params.id)}, {$push: {attributes: {push: req.body.attributes}}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
