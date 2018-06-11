@@ -159,6 +159,16 @@ app.get("/coeducate/api/calendar/:id", (req, res, next) => {
   })
 });
 
+app.get("/coeducate/api/calendar/", (req, res, next) => {
+    db.collection(COEDUCATECALENDAR).find({}).toArray((err, docs) => {
+        if (err) {
+            handleError(res, err.message, "Failed to get calendar.");
+        } else {
+            res.status(200).json(docs);
+        }
+    });
+});
+
 app.put("/coeducate/api/calendar/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
