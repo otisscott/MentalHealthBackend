@@ -7,6 +7,7 @@ const twilio = require("twilio");
 
 //MentalHealth Collections
 const MENTALHEALTHUSERS = "mentalhealthusers";
+const MENTALHEALTHSTORIES = "mentalhealthstories";
 //MethPain Collections
 const METHPAINUSERS = "methpainusers";
 //CoEducate Collections
@@ -98,6 +99,30 @@ app.put("/mentalhealthapp/api/users/:id", function(req, res) {
   });
 });
 
+app.post("/mentalhealthapp/api/stories", function(req, res) {
+  const newStories = req.body;
+  newUser.createDate = new Date();
+
+  db.collection(MENTALHEALTHSTORIES).insertOne(newStories, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
+})
+
+app.get("/mentalhealthstories/api/stories/:email", (req, res, next) => {
+  db.collection(MENTALHEALTHSTORIES).findOne({email: req.params.email}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid user email");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
+
 //CoEducate Backend Stuff
 app.get("/coeducate/api/users/:email", (req, res, next) => {
   db.collection(COEDUCATEUSERS).findOne({email: req.params.email}, (err, doc) => {
@@ -126,7 +151,7 @@ app.put("/coeducate/api/users/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(COEDUCATEUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
+  db.collection(COEDUCATEUSERS).update({_id: new ObjectID(req.params.id)}, {$push: {information:{push: req.body.information}}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -173,7 +198,7 @@ app.put("/coeducate/api/calendar/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(COEDUCATECALENDAR).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
+  db.collection(COEDUCATECALENDAR).update({_id: new ObjectID(req.params.id)}, {$push: {events: {push: req.body.events}}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -301,16 +326,17 @@ app.post("/berkeleyeats/api/users", (req, res, next) => {
             friendlyName: newUser.firstName + " " + newUser.lastName,
             phoneNumber: newUser.phone
         })
-        .then(validation_request => {
-            console.log(validation_request.friendlyName);
-            db.collection(BERKELEYEATSUSERS).insertOne(newUser, (err, doc) => {
-                    if (err) {
-                        handleError(res, err.message, "Failed to create new user.");
-                    } else {
-                        res.status(201).json(doc.ops[0]);
-                    }
-        })
+        .then(validation_request =>
+            console.log(validation_request.friendlyName)
+        )
         .done();
+
+  db.collection(BERKELEYEATSUSERS).insertOne(newUser, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "Failed to create new user.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
   });
 });
 
@@ -456,6 +482,16 @@ app.get("/floofbunny/api/bunnies/:bunName", (req, res, next) => {
   })
 });
 
+app.get("/floofbunny/api/bunnies/:email", (req, res, next) => {
+  db.collection(FLOOFBUNNY).findOne({email: req.params.email}, (err, doc) => {
+    if (err) {
+      handleError(res, err.message, "That is not a valid user email");
+    } else {
+      res.status(200).json(doc);
+    }
+  })
+});
+
 app.post("/floofbunny/api/bunnies", (req, res, next) => {
   const newUser = req.body;
   newUser.createDate = new Date();
@@ -473,7 +509,7 @@ app.put("/floofbunny/api/bunnies/:id", function(req, res) {
   let updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(FLOOFBUNNY).update({_id: new ObjectID(req.params.id)}, {$push: {updateDoc}}, function(err, doc) {
+  db.collection(FLOOFBUNNY).update({_id: new ObjectID(req.params.id)}, {$push: {attributes: {push: req.body.attributes}}}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
